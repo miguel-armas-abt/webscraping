@@ -3,12 +3,12 @@ from nltk import word_tokenize
 from dboperation import DBOferta
 from dboperation import DBOfertadetalle
 from dboperation import DBKeywordSearch
-from repositories import webscraping_repository
+from dao import webscraping_dao
 from models import webscraping
 
 class Controller:
     def __init__(self):
-        self.dbwebscraping = webscraping_repository.WebscrapingRepository()
+        self.dbwebscraping = webscraping_dao.WebscrapingDao()
         self.dboferta = DBOferta()
         self.dbofertadetalle = DBOfertadetalle()
         self.dbkeywordsearch = DBKeywordSearch()
@@ -23,7 +23,7 @@ class Controller:
             webscrapingTupla["url_prefix"],
             1
         )
-        id = self.dbwebscraping.insert_webscraping(webscrapingModel)
+        id = self.dbwebscraping.insert(webscrapingModel)
         return id
 
     def registrar_oferta(self, con, oferta):        
