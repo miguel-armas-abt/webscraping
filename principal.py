@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import psycopg2
 from configuration import *
 import webscraping_computrabajo
 import webscraping_indeed
 import webscraping_googleJobs
 from controller import Controller
-from dbconnection import Connection
+from repositories.dbconnection import Connection
 
 '''
 def construir_busqueda_filtro(carga, filtro):

@@ -1,4 +1,4 @@
-from dbconnection import Connection
+from repositories.dbconnection import Connection
 import psycopg2
 
 class Repository():
@@ -19,7 +19,7 @@ class Repository():
 
             # confirmo cambios
             database.commit()
-            print("Sentencia ejecutada ejecutada")
+            print("Sentencia ejecutada")
 
             # obtengo el id del ultimo registro insertado
             cursor.execute(sql_select_last)
