@@ -1,10 +1,8 @@
-from urllib.request import urlopen
-from urllib.error import HTTPError
 import bs4
 from bs4 import BeautifulSoup
 import requests
 from controller import Controller
-from configuration import COMPUTRABAJO
+from properties.configuration import COMPUTRABAJO
 
 
 def contain_br(contents):

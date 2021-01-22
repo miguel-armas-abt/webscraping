@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from configuration import *
+from properties.configuration import *
 import webscraping_computrabajo
 import webscraping_indeed
 import webscraping_googleJobs

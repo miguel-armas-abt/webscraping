@@ -1,5 +1,5 @@
 import psycopg2
-from configuration import DATABASE
+from properties.configuration import DATABASE
 
 
 class Connection:

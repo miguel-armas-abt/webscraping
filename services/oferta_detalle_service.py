@@ -1,7 +1,7 @@
 from dao import oferta_detalle_dao
 from models import oferta_detalle
 
-class OfertaService():
+class OfertaDetalleService():
 
     def __init__(self):
         self.__oferta_detalle_dao = oferta_detalle_dao.OfertaDetalleDao()
