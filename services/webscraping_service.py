@@ -51,16 +51,8 @@ class WebScrapingService():
             1                           # id_keyword
         )
         id_webscraping_insert = self.insert_then_return_latest_row(wscraping)
-
         listaOferta = self.scrape(url_pagina, url_busqueda, "", numero_pagina_inicio, numero_paginas, numero_ofertas, id_webscraping_insert)
 
-        """"
-        webscraping_googleJobs.scraping_ofertas(con, carga["url_principal"], carga["url_prefix"],
-                                                          carga["url_sufix"],
-                                                          carga["pagina_inicial"], carga["cant_paginas"],
-                                                          carga["cant_ofertas"],
-                                                          carga["id_carga"])
-        """
 
     def scrape(self, url_principal, prefix_url, sufix_url, pagina_inicial, cant_paginas, cant_ofertas, id_carga):
         lista_oferta = []
@@ -118,26 +110,14 @@ class WebScrapingService():
                 datetime.now()
             )
 
-            """
-            oferta["id_carga"] = id_carga
-            oferta["url_pagina"] = prefix_url
-            oferta["url"] = url
-            oferta["puesto"] = x.text
-            oferta["salario"] = ""
-            oferta["detalle"] = detalle.text + detalle2
-            """
             try:
-                """"
-                oferta["empresa"] = etiquetas[0].text
-                oferta["lugar"] = etiquetas[1].text
-                """
                 ofer.setEmpresa(etiquetas[0].text)
                 ofer.setLugar(etiquetas[1].text)
             except:
                 oferta["lugar"] = ""
             lista_oferta.append(oferta)
 
-            id_oferta_insert = self.__of_service.insert_then_return_latest_row(ofer)    ## setear oferta
+            id_oferta_insert = self.__of_service.insert_then_return_latest_row(ofer)
             #id = controller.registrar_oferta(con, oferta)
 
             PARRAFO = detalle.text.splitlines()
@@ -161,16 +141,8 @@ class WebScrapingService():
                             datetime.now(),
                             1
                         )
-                        #desc = {}
-                        #desc["id_oferta"] = id
-                        #desc["descripcion"] = line
-                        #list_clean.append(desc)
 
-            id_oferta_detalle_insert = self.__of_detalle_service.insert_then_return_latest_row(ofer_detalle)      ## setear of_detalle
-            #controller.registrar_detalle_oferta(con, list_clean)
-            # print(list_clean)
-            # print()
-            # print(row)
+            id_oferta_detalle_insert = self.__of_detalle_service.insert_then_return_latest_row(ofer_detalle)
         return lista_oferta
 
 WebScrapingService().scrape_request()
