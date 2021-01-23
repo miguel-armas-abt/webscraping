@@ -3,13 +3,10 @@ from models import oferta
 from models import oferta_detalle
 from models import ofertaperfil_tipo
 
-from dao import oferta_dao
-from dao import webscraping_dao
-from dao import oferta_detalle_dao
-from dao import ofertaperfil_dao
+from services import oferta_service
+from services import oferta_detalle_service
 
 from datetime import datetime
-
 
 #################################################### insertar webscraping
 wscraping = webscraping.WebScraping(
@@ -20,7 +17,7 @@ wscraping = webscraping.WebScraping(
     'https://google.com/search?q=analista+programador&ibp=htl;jobs#htivrt=jobs',
     1
 )
-webscraping_dao.WebscrapingDao().insert(wscraping)
+# print(webscraping_dao.WebscrapingDao().insert_then_return_latest_row(wscraping))
 
 
 #################################################### insertar oferta
@@ -41,17 +38,8 @@ oferta = oferta.Oferta(
     'oferta detalle test',
     datetime.now()
 )
-oferta_dao.OfertaDao().insert(oferta)
+print(oferta_service.OfertaService().insert_then_return_latest_row(oferta))
 
-
-
-#################################################### insertar ofertaperfiltipo
-ofertaperfil_tipo = ofertaperfil_tipo.OfertaPerfilTipo(
-    1,
-    'y',
-    'n'
-)
-ofertaperfil_dao.OfertaDao().insert(ofertaperfil_tipo)
 
 
 #################################################### insertar ofertadetalle
@@ -65,6 +53,4 @@ of_detalle = oferta_detalle.OfertaDetalle(
     datetime.now(),
     1
 )
-oferta_detalle_dao.OfertaDetalleDao().insert(of_detalle)
-
-
+print(oferta_detalle_service.OfertaDetalleService().insert_then_return_latest_row(of_detalle))

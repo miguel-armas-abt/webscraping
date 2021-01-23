@@ -6,12 +6,14 @@ class OfertaDao():
     def __init__(self):
         self.__repository = repository.Repository()
 
-    def insert(self, oferta):
+    def insert_then_return_latest_row(self, oferta):
         # defino las sentencia sql
         sql_insert = "INSERT INTO public.oferta(id_webscraping, titulo, empresa, lugar, tiempo_publicado, " \
                      "salario, modalidad_trabajo, subarea, url_oferta, url_pagina, area, fecha_creacion, " \
                      "fecha_modificacion, oferta_detalle, fecha_publicacion) " \
                      "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+
+        sql_select_last = "SELECT last_value FROM oferta_id_oferta_seq"
 
         # obtengo los parametros para la query sql
         params = (
@@ -31,4 +33,4 @@ class OfertaDao():
             oferta.getOferta_detalle(),
             oferta.getOfertaFechaPublicacion())
 
-        self.__repository.insert(params, sql_insert)
+        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)

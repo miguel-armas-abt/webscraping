@@ -6,5 +6,5 @@ class OfertaDetalleService():
     def __init__(self):
         self.__oferta_detalle_dao = oferta_detalle_dao.OfertaDetalleDao()
 
-    def insert(self, oferta_detalle: oferta_detalle.OfertaDetalle):
-        self.__oferta_dao.insert(oferta_detalle)
+    def insert_then_return_latest_row(self, oferta_detalle: oferta_detalle.OfertaDetalle):
+        return self.__oferta_detalle_dao.insert_then_return_latest_row(oferta_detalle)

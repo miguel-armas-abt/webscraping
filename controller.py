@@ -23,7 +23,7 @@ class Controller:
             webscrapingTupla["url_prefix"],
             1
         )
-        id = self.dbwebscraping.insert(webscrapingModel)
+        id = self.dbwebscraping.insert_then_return_latest_row(webscrapingModel)
         return id
 
     def registrar_oferta(self, con, oferta):        

@@ -53,13 +53,6 @@ def set_url_busqueda_compuTrabajo(carga):
     carga["url_sufix"] = ""
     carga["url_busqueda"] = carga["url_principal"] + urlbusqueda   
 
-def set_url_busqueda_googleJobs(carga):
-    #MODIFICADO URL COMPU-TRABAJO
-    carga["url_principal"] = GOOGLE_JOBS["WS_PORTAL_LABORAL_URL"]
-    urlbusqueda = "/search?q=analista+programador&ibp=htl;jobs#htivrt=jobs"
-    carga["url_prefix"] = carga["url_principal"] + urlbusqueda 
-    carga["url_sufix"] = ""
-    carga["url_busqueda"] = carga["url_principal"] + urlbusqueda     
 
 def connect_bd():
     con = Connection(DATABASE["DB_HOST"], DATABASE["DB_SERVICE"], DATABASE["DB_USER"], DATABASE["DB_PASSWORD"])
@@ -100,6 +93,15 @@ def delati_indeed():
                                                carga["pagina_inicial"], carga["cant_paginas"], carga["cant_ofertas"],
                                                carga["id_carga"])
     print(listaOferta)
+
+def set_url_busqueda_googleJobs(carga):
+    #MODIFICADO URL COMPU-TRABAJO
+    carga["url_principal"] = GOOGLE_JOBS["WS_PORTAL_LABORAL_URL"]
+    urlbusqueda = "/search?q=analista+programador&ibp=htl;jobs#htivrt=jobs"
+    carga["url_prefix"] = carga["url_principal"] + urlbusqueda
+    carga["url_sufix"] = ""
+    carga["url_busqueda"] = carga["url_principal"] + urlbusqueda
+
 
 def delati_googleJobs():
     controller = Controller()

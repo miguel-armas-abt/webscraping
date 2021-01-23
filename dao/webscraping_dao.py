@@ -6,7 +6,7 @@ class WebscrapingDao():
     def __init__(self):
         self.__repository = repository.Repository()
 
-    def insert(self, webscraping):
+    def insert_then_return_latest_row(self, webscraping):
         # defino las sentencia sql
         sql_insert = "INSERT INTO webscraping (busqueda, busqueda_area, pagina_web, url_pagina, url_busqueda,fecha_creacion,fecha_modificacion, id_keyword)" \
                      "VALUES (%s, %s, %s, %s, %s, current_date, current_date, %s)"
@@ -22,4 +22,4 @@ class WebscrapingDao():
             webscraping.getUrl_busqueda(),
             webscraping.getId_keyword())
 
-        self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)
+        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)
