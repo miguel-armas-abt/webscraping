@@ -5,7 +5,7 @@ DATABASE = {
     "DB_HOST" : "127.0.0.1",
     "DB_SERVICE" : "db_taller_sistemas",
     "DB_USER" : "postgres",
-    "DB_PASSWORD" : "oracle12c"
+    "DB_PASSWORD" : "romerosalazar"
 }
 
 #SITIO-COMPUTRABAJO
