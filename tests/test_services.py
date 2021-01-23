@@ -5,6 +5,7 @@ from models import ofertaperfil_tipo
 
 from services import oferta_service
 from services import oferta_detalle_service
+from services import webscraping_service
 
 from datetime import datetime
 
@@ -17,7 +18,7 @@ wscraping = webscraping.WebScraping(
     'https://google.com/search?q=analista+programador&ibp=htl;jobs#htivrt=jobs',
     1
 )
-# print(webscraping_dao.WebscrapingDao().insert_then_return_latest_row(wscraping))
+print(webscraping_service.WebScrapingService().insert_then_return_latest_row(wscraping))
 
 
 #################################################### insertar oferta

@@ -26,8 +26,8 @@ class WebScrapingService():
         self.__of_service = oferta_service.OfertaService()
         self.__of_detalle_service = oferta_detalle_service.OfertaDetalleService()
 
-    def insert(self, webscraping: webscraping.WebScraping):
-        self.__wscraping_dao.insert_then_return_latest_row(webscraping)
+    def insert_then_return_latest_row(self, webscraping: webscraping.WebScraping):
+        return self.__wscraping_dao.insert_then_return_latest_row(webscraping)
 
     def scrape_request(self):
         pagina_web = GOOGLE_JOBS["WS_PORTAL_LABORAL"]               ## google jobs
@@ -50,7 +50,7 @@ class WebScrapingService():
             url_busqueda,               # url_busqueda
             1                           # id_keyword
         )
-        id_webscraping_insert = self.insert(wscraping)
+        id_webscraping_insert = self.insert_then_return_latest_row(wscraping)
 
         listaOferta = self.scrape(url_pagina, url_busqueda, "", numero_pagina_inicio, numero_paginas, numero_ofertas, id_webscraping_insert)
 

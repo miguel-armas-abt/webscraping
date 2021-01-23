@@ -12,7 +12,7 @@ def scraping_ofertas(con, url_principal, prefix_url, sufix_url, pagina_inicial, 
     lista_oferta = []
     list_clean =[]
     #CADENA_BUSQUEDA = "analista programador"
-    driver = webdriver.Chrome('./chromedriver.exe')
+    driver = webdriver.Chrome('services/chromedriver.exe')
     #driver.get("https://www.google.com/search?q="+CADENA_BUSQUEDA.replace(" ","+")+"&ibp=htl;jobs#htivrt=jobs")
     driver.get(prefix_url)
     scroll_empleos = driver.find_element_by_class_name("vWdgBe") # elemento que contiene la lista de empleos
