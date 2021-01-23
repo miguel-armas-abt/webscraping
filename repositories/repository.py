@@ -55,3 +55,25 @@ class Repository():
             database.rollback()
 
         database.close()
+
+    def select_keyword_search(self, sql_select):
+        keywords = []
+        try:
+
+            # conecto a base de datos
+            database = self.__conexion.connect()
+
+            # ejecuto la query
+            cursor = database.cursor()
+
+            # obtengo keywords
+            cursor.execute(sql_select)
+            keywords = list(cursor.fetchall())
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            # revertir en caso de error
+            print("Error!, rollback")
+            print(error)
+
+        database.close()
+        return keywords
