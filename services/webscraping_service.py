@@ -152,7 +152,7 @@ class WebScrapingService():
                                   normalize("NFD", line), 0, re.I)
                     if (not line == ""):
                         ofer_detalle = oferta_detalle.OfertaDetalle(
-                            id,                             # id_oferta
+                            id_oferta_insert,               # id_oferta
                             line,                           # descripcion
                             'descripcion normalizada test',
                             3,
