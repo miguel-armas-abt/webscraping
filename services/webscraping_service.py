@@ -173,3 +173,4 @@ class WebScrapingService():
             # print(row)
         return lista_oferta
 
+WebScrapingService().scrape_request()
