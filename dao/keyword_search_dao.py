@@ -10,6 +10,4 @@ class KeywordSearchDao():
         # defino las sentencia sql
         sql_select = "SELECT descripcion, id_tipokeyword FROM public.keyword_search"
 
-
-
         return self.__repository.select_keyword_search(sql_select)

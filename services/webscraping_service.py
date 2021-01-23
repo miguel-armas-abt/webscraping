@@ -8,9 +8,11 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 from properties.configuration import *
+from utils import util
 
 from services import oferta_service
 from services import oferta_detalle_service
+from services import keyword_search_service
 
 from models import webscraping
 from models import oferta as ofertaModelo
@@ -25,11 +27,18 @@ class WebScrapingService():
         self.__wscraping_dao = webscraping_dao.WebscrapingDao()
         self.__of_service = oferta_service.OfertaService()
         self.__of_detalle_service = oferta_detalle_service.OfertaDetalleService()
+        self.__key_service = keyword_search_service.KeywordSearchService()
 
     def insert_then_return_latest_row(self, webscraping: webscraping.WebScraping):
         return self.__wscraping_dao.insert_then_return_latest_row(webscraping)
 
-    def scrape_request(self):
+    def iterar_scrape(self):
+        ksearchs = self.__key_service.select_keyword_search()
+        for ksearch in ksearchs:
+            cadena_limpia = util.Utils().limpiar_cadena(ksearch[0])
+            self.scrape_request(cadena_limpia)
+
+    def scrape_request(self, cadena_busqueda):
         pagina_web = GOOGLE_JOBS["WS_PORTAL_LABORAL"]               ## google jobs
         numero_paginas = GOOGLE_JOBS["WS_PAGINAS"]                  ## 0
         numero_pagina_inicio = GOOGLE_JOBS["WS_PAGINA_INICIAL"]     ## 1
@@ -38,7 +47,7 @@ class WebScrapingService():
         url_pagina = GOOGLE_JOBS["WS_PORTAL_LABORAL_URL"]           ## https://google.com
 
         ## incrusto mi keyword search en la url
-        url_busqueda = "/search?q=analista+programador&ibp=htl;jobs#htivrt=jobs"
+        url_busqueda = "/search?q="+cadena_busqueda+"&ibp=htl;jobs#htivrt=jobs"
         url_busqueda = url_pagina + url_busqueda
 
         ## inserto el registro de webscraping
@@ -145,4 +154,4 @@ class WebScrapingService():
             id_oferta_detalle_insert = self.__of_detalle_service.insert_then_return_latest_row(ofer_detalle)
         return lista_oferta
 
-WebScrapingService().scrape_request()
+WebScrapingService().iterar_scrape()
