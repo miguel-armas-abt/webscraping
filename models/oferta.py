@@ -3,7 +3,7 @@ class Oferta():
     def __init__(self, id_webscraping, titulo, empresa, lugar,
      tiempo_publicado, salario, modalidad_trabajo, subarea,
      url_oferta, url_pagina, area, fecha_creacion, fecha_modificacion
-     ,oferta_detalle, oferta_fecha_publicacion):
+     ,oferta_detalle, oferta_fecha_publicacion, id_anuncioempleo):
         self.__id_webscraping=id_webscraping
         self.__titulo=titulo
         self.__empresa=empresa
@@ -19,6 +19,7 @@ class Oferta():
         self.__fecha_modificacion=fecha_modificacion
         self.__oferta_detalle=oferta_detalle
         self.__oferta_fecha_publicacion = oferta_fecha_publicacion
+        self.__id_anuncioempleo = id_anuncioempleo
 
     ## setters
     def setId_webscraping(self, id_webscraping):
@@ -66,6 +67,9 @@ class Oferta():
     def setOfertaFechaPublicacion(self, oferta_fecha_publicacion):
         self.__oferta_fecha_publicacion = oferta_fecha_publicacion
 
+    def setIdAnuncioEmpleo(self, id_anuncioempleo):
+        self.__id_anuncioempleo = id_anuncioempleo
+
     ## getters
     def getId_webscraping(self):
         return self.__id_webscraping
@@ -111,3 +115,6 @@ class Oferta():
 
     def getOfertaFechaPublicacion(self):
         return self.__oferta_fecha_publicacion
+
+    def getIdAnuncioEmpleo(self):
+        return self.__id_anuncioempleo

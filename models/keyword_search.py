@@ -1,8 +1,9 @@
 class keywordSearch():
 
-    def __init__(self, descripcion, id_tipokeyword):
+    def __init__(self, id_keyword, descripcion):
+        self._id_keyword = id_keyword
         self.__descripcion=descripcion
-        self.__id_tipokeyword=id_tipokeyword
+
 
 
     ## setters
@@ -10,14 +11,14 @@ class keywordSearch():
     def setDescripcion(self, descripcion):
         self.__descripcion = descripcion
 
-    def setId_tipokeyword(self, id_tipokeyword):
-        self.__id_tipokeyword = id_tipokeyword
+    def setIdkeyword(self, id_keyword):
+        self.__id_keyword = id_keyword
 
     ## getters
 
     def getDescripcion(self):
         return self.__descripcion
 
-    def getId_tipokeyword(self):
-        return self.__id_tipokeyword
+    def getIdkeyword(self):
+        return self.__id_keyword
 

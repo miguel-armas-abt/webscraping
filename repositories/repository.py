@@ -25,9 +25,10 @@ class Repository():
             cursor.execute(sql_select_last)
             last_row_id = int(cursor.fetchone()[0])
 
-        except:
+        except (Exception, psycopg2.DatabaseError) as error:
             # revertir en caso de error
             print("Error!, rollback")
+            print(error)
             database.rollback()
 
         database.close()

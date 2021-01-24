@@ -10,8 +10,8 @@ class OfertaDao():
         # defino las sentencia sql
         sql_insert = "INSERT INTO public.oferta(id_webscraping, titulo, empresa, lugar, tiempo_publicado, " \
                      "salario, modalidad_trabajo, subarea, url_oferta, url_pagina, area, fecha_creacion, " \
-                     "fecha_modificacion, oferta_detalle, fecha_publicacion) " \
-                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                     "fecha_modificacion, oferta_detalle, fecha_publicacion, id_anuncioempleo) " \
+                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 
         sql_select_last = "SELECT last_value FROM oferta_id_oferta_seq"
 
@@ -31,6 +31,7 @@ class OfertaDao():
             oferta.getFecha_creacion(),
             oferta.getFecha_modificacion(),
             oferta.getOferta_detalle(),
-            oferta.getOfertaFechaPublicacion())
+            oferta.getOfertaFechaPublicacion(),
+            oferta.getIdAnuncioEmpleo())
 
         return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)
