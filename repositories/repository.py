@@ -80,7 +80,7 @@ class Repository():
         return keywords
 
     def existe_registro(self, params, sql_select):
-
+        result = False
         try:
             # conecto a base de datos
             database = self.__conexion.connect()
@@ -93,8 +93,6 @@ class Repository():
             result = cursor.fetchone()
 
         except (Exception, psycopg2.DatabaseError) as error:
-            # revertir en caso de error
-            print("Error!, rollback")
             print(error)
 
         database.close()

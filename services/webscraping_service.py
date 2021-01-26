@@ -119,31 +119,34 @@ class WebScrapingService():
             # se crea un codigo hash de la oferta para validar si existe o no en la db
             id_anuncioempleo = hashlib.md5(str(detalle.text).encode()).hexdigest()
 
-            parrafo = detalle.text.splitlines()
-            modalidad = util.Utils().obtenerModalidad(parrafo, oferta.text)
-            salario = util.Utils().obtenerSalario(parrafo)
+            if (oferta_service.OfertaService().existe_registro(id_anuncioempleo)):
+                print("El registro con id: " + id_anuncioempleo + " ya existe")
+            else:
+                parrafo = detalle.text.splitlines()
+                modalidad = util.Utils().obtenerModalidad(parrafo, oferta.text)
+                salario = util.Utils().obtenerSalario(parrafo)
 
-            ofer = ofertaModelo.Oferta(
-                id_webscraping,                 # id_webscraping
-                oferta.text,                    # titulo
-                empresa,                        # empresa
-                lugar,                          # lugar
-                tiempo_publicado,               # tiempo publicado
-                salario,                        # salario
-                modalidad,                      # modalidad de trabajo
-                None,                           # subarea
-                url_oferta,                     # url oferta
-                url_pagina,                     # url pagina
-                None,                           # area
-                datetime.now(),                 # fecha creacion
-                datetime.now(),                 # fecha modificacion
-                detalle.text,                   # detalle
-                None,                           # fecha publicacion
-                id_anuncioempleo                # id_anuncioempleo
-            )
+                ofer = ofertaModelo.Oferta(
+                    id_webscraping,                 # id_webscraping
+                    oferta.text,                    # titulo
+                    empresa,                        # empresa
+                    lugar,                          # lugar
+                    tiempo_publicado,               # tiempo publicado
+                    salario,                        # salario
+                    modalidad,                      # modalidad de trabajo
+                    None,                           # subarea
+                    url_oferta,                     # url oferta
+                    url_pagina,                     # url pagina
+                    None,                           # area
+                    datetime.now(),                 # fecha creacion
+                    datetime.now(),                 # fecha modificacion
+                    detalle.text,                   # detalle
+                    None,                           # fecha publicacion
+                    id_anuncioempleo                # id_anuncioempleo
+                )
 
-            id_oferta_insert = self.__of_service.insert_then_return_latest_row(ofer)
-            self.insertarOfertaDetalle(parrafo, id_oferta_insert)
+                id_oferta_insert = self.__of_service.insert_then_return_latest_row(ofer)
+                self.insertarOfertaDetalle(parrafo, id_oferta_insert)
 
     def insertarOfertaDetalle(self, parrafo, id_oferta):
         for linea_descripcion in parrafo:

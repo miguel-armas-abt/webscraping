@@ -3,7 +3,7 @@
 # from models import oferta_detalle
 # from models import ofertaperfil_tipo
 #
-# from services import oferta_service
+from services import oferta_service
 # from services import oferta_detalle_service
 # from services import webscraping_service
 from services import keyword_search_service
@@ -58,4 +58,6 @@ from services import keyword_search_service
 # )
 # print(oferta_detalle_service.OfertaDetalleService().insert_then_return_latest_row(of_detalle))
 
-print(keyword_search_service.KeywordSearchService().select_keyword_search())
+# print(keyword_search_service.KeywordSearchService().select_keyword_search())
+
+print(oferta_service.OfertaService().existe_registro("a104ddc4dbc15936cdf41e125728c451"))

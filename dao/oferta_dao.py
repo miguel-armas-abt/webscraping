@@ -41,7 +41,6 @@ class OfertaDao():
         sql_select = "SELECT EXISTS (SELECT id_anuncioempleo FROM public.oferta WHERE id_anuncioempleo = %s);"
 
         # obtengo los parametros para la query sql
-        params = (
-            id_anuncioempleo)
+        params = (id_anuncioempleo,)
 
-        return self.__repository.existe_registro(params, sql_select)
+        return self.__repository.existe_registro(params, sql_select)[0]
