@@ -107,6 +107,7 @@ class WebScrapingService():
 
             empresa = ""
             lugar = ""
+            fecha_publicacion = ""
             try:
                 # empresa
                 empresa = etiquetas[0].text
@@ -125,6 +126,7 @@ class WebScrapingService():
                 parrafo = detalle.text.splitlines()
                 modalidad = util.Utils().obtenerModalidad(parrafo, oferta.text)
                 salario = util.Utils().obtenerSalario(parrafo)
+                fecha_publicacion = util.Utils().obtener_fec_pub(tiempo_publicado)
 
                 ofer = ofertaModelo.Oferta(
                     id_webscraping,                 # id_webscraping
@@ -141,7 +143,7 @@ class WebScrapingService():
                     datetime.now(),                 # fecha creacion
                     datetime.now(),                 # fecha modificacion
                     detalle.text,                   # detalle
-                    None,                           # fecha publicacion
+                    fecha_publicacion,              # fecha publicacion
                     id_anuncioempleo                # id_anuncioempleo
                 )
 

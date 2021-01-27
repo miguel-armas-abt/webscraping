@@ -1,3 +1,6 @@
+import datetime
+import re
+
 class Utils():
 
     def limpiar_cadena(self, cadena):
@@ -36,9 +39,56 @@ class Utils():
             if (salario.lower() in lineaTexto.lower()):
                 return True
 
+    meses = [
+        ['enero', 31],
+        ['febrero', 28],
+        ['marzo', 30],
+        ['abril', 31],
+        ['mayo', 30],
+        ['junio', 31],
+        ['julio', 31],
+        ['agosto', 31],
+        ['septiembre', 30],
+        ['octubre', 31],
+        ['noviembre', 30],
+        ['diciembre', 31]
+    ]
 
+    def obtener_fec_pub(self, cadena):
+        fecha_actual = datetime.datetime.now()
+        hora_actual = fecha_actual.hour
+        dia_actual = fecha_actual.day
+        mes_actual = fecha_actual.month
+        anio_actual = fecha_actual.year
 
-# print(Utils().obtenerModalidad("Oferta laboral \n modo presencial \n fin de oferta".splitlines(), "titulooooo"))
-# print(Utils().isModalidad2("Oferta laboral \n modo presencial \n fin de oferta", "titulooooo"))
+        numero = self.obtener_numero_fecha(cadena)
 
-print(Utils().obtenerSalario("Oferta laboral \n modo presencial \n salrio s/5000".splitlines()))
+        if "hora" in cadena:
+            if hora_actual >= numero:
+                return datetime.date(anio_actual, mes_actual, dia_actual)
+            else:
+                if dia_actual != 1:
+                    return datetime.date(anio_actual, mes_actual, dia_actual - 1)
+                else:
+                    if mes_actual != 1:
+                        return datetime.date(anio_actual, mes_actual - 1, meses[mes_actual - 1][1])
+                    else:
+                        return datetime.date(anio_actual - 1, 12, 31)
+
+        if "día" in cadena:
+            if dia_actual > numero:
+                return datetime.date(anio_actual, mes_actual, dia_actual - numero)
+            else:
+                if mes_actual == 1:
+                    return datetime.date(anio_actual - 1, 12, 31 - abs(dia_actual - numero))
+                else:
+                    return datetime.date(anio_actual, mes_actual - 1, meses[mes_actual - 1][1] - abs(dia_actual - numero))
+
+        if "mes" in cadena:
+            if mes_actual > numero:
+                return datetime.date(anio_actual, mes_actual - numero, dia_actual)
+            else:
+                return datetime.date(anio_actual - 1, 12 - abs(mes_actual - numero), dia_actual)
+
+    def obtener_numero_fecha(self, cadena):
+        return int(re.sub("[^0-9]", "", cadena))
