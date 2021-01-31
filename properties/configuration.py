@@ -1,14 +1,14 @@
 
 # DATABASE
 DATABASE = {
-    # "DB_HOST" : "161.35.60.197",
-    # "DB_SERVICE" : "tcs7",
-    # "DB_USER" : "modulo4",
-    # "DB_PASSWORD" : "modulo4"
-    "DB_HOST" : "127.0.0.1",
-    "DB_SERVICE" : "db_taller_sistemas",
-    "DB_USER" : "postgres",
-    "DB_PASSWORD" : "oracle12c"
+    "DB_HOST" : "161.35.60.197",
+    "DB_SERVICE" : "tcs7",
+    "DB_USER" : "modulo4",
+    "DB_PASSWORD" : "modulo4"
+    # "DB_HOST" : "127.0.0.1",
+    # "DB_SERVICE" : "bd_taller_sistemas",
+    # "DB_USER" : "postgres",
+    # "DB_PASSWORD" : "romerosalazar"
 }
 
 #SITIO-COMPUTRABAJO
