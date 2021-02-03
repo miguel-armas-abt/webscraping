@@ -71,84 +71,87 @@ class WebScrapingService():
         driver.get(url_pagina)
 
         # scroll
-        scroll_empleos = driver.find_element_by_class_name("vWdgBe")  # lista de empleos
-        for x in range(0, numero_paginas):
-            scroll_empleos.send_keys(Keys.END)
-            sleep(0.5)
-        scroll_empleos.send_keys(Keys.UP)
+        try:
+            scroll_empleos = driver.find_element_by_class_name("vWdgBe")  # lista de empleos
+            for x in range(0, numero_paginas):
+                scroll_empleos.send_keys(Keys.END)
+                sleep(0.5)
+            scroll_empleos.send_keys(Keys.UP)
 
-        # obtengo la lista de ofertas
-        ofertas = driver.find_elements_by_class_name("BjJfJf")
+            # obtengo la lista de ofertas
+            ofertas = driver.find_elements_by_class_name("BjJfJf")
 
-        for oferta in ofertas:
-            # card item oferta
-            item_detalle = driver.find_element_by_class_name("jolnDe")
-            oferta.click()
-            sleep(random.uniform(0.5, 1))
+            for oferta in ofertas:
+                # card item oferta
+                item_detalle = driver.find_element_by_class_name("jolnDe")
+                oferta.click()
+                sleep(random.uniform(0.5, 1))
 
-            # etiqueta empresa y lugar
-            etiquetas = item_detalle.find_elements_by_class_name("sMzDkb")
+                # etiqueta empresa y lugar
+                etiquetas = item_detalle.find_elements_by_class_name("sMzDkb")
 
-            # url de la oferta
-            url_oferta = item_detalle.find_element_by_class_name("pMhGee").get_attribute('href')
+                # url de la oferta
+                url_oferta = item_detalle.find_element_by_class_name("pMhGee").get_attribute('href')
 
-            # detalle parrafo de la oferta
-            detalle = item_detalle.find_element_by_class_name("HBvzbc")
+                # detalle parrafo de la oferta
+                detalle = item_detalle.find_element_by_class_name("HBvzbc")
 
-            # tiempo publicado (Ej: hace 2 dias)
-            tiempo_publicado = item_detalle.find_element_by_class_name("SuWscb").text
+                # tiempo publicado (Ej: hace 2 dias)
+                tiempo_publicado = item_detalle.find_element_by_class_name("SuWscb").text
 
-            try:
-                # boton mostrar mas informacion
-                masInfo = item_detalle.find_element_by_class_name("cVLgvc")
-                masInfo.click()
-            except:
-                pass
+                try:
+                    # boton mostrar mas informacion
+                    masInfo = item_detalle.find_element_by_class_name("cVLgvc")
+                    masInfo.click()
+                except:
+                    pass
 
-            empresa = ""
-            lugar = ""
-            fecha_publicacion = ""
-            try:
-                # empresa
-                empresa = etiquetas[0].text
+                empresa = ""
+                lugar = ""
+                fecha_publicacion = ""
+                try:
+                    # empresa
+                    empresa = etiquetas[0].text
 
-                # lugar
-                lugar = etiquetas[1].text
-            except:
-                pass
+                    # lugar
+                    lugar = etiquetas[1].text
+                    fecha_publicacion = util.Utils().obtener_fec_pub(tiempo_publicado)
+                except:
+                    pass
 
-            # se crea un codigo hash de la oferta para validar si existe o no en la db
-            id_anuncioempleo = hashlib.md5(str(detalle.text).encode()).hexdigest()
+                # se crea un codigo hash de la oferta para validar si existe o no en la db
+                id_anuncioempleo = hashlib.md5(str(detalle.text).encode()).hexdigest()
 
-            if (oferta_service.OfertaService().existe_registro(id_anuncioempleo)):
-                print("El registro con id: " + id_anuncioempleo + " ya existe")
-            else:
-                parrafo = detalle.text.splitlines()
-                modalidad = util.Utils().obtenerModalidad(parrafo, oferta.text)
-                salario = util.Utils().obtenerSalario(parrafo)
-                fecha_publicacion = util.Utils().obtener_fec_pub(tiempo_publicado)
+                if (oferta_service.OfertaService().existe_registro(id_anuncioempleo)):
+                    print("El registro con id: " + id_anuncioempleo + " ya existe")
+                else:
+                    parrafo = detalle.text.splitlines()
+                    modalidad = util.Utils().obtenerModalidad(parrafo, oferta.text)
+                    salario = util.Utils().obtenerSalario(parrafo)
 
-                ofer = ofertaModelo.Oferta(
-                    id_webscraping,                 # id_webscraping
-                    oferta.text,                    # titulo
-                    empresa,                        # empresa
-                    lugar,                          # lugar
-                    tiempo_publicado,               # tiempo publicado
-                    salario,                        # salario
-                    modalidad,                      # modalidad de trabajo
-                    None,                           # subarea
-                    url_oferta,                     # url oferta
-                    url_pagina,                     # url pagina
-                    None,                           # area
-                    datetime.now(),                 # fecha creacion
-                    datetime.now(),                 # fecha modificacion
-                    detalle.text,                   # detalle
-                    fecha_publicacion,              # fecha publicacion
-                    id_anuncioempleo                # id_anuncioempleo
-                )
+                    ofer = ofertaModelo.Oferta(
+                        id_webscraping,                 # id_webscraping
+                        oferta.text,                    # titulo
+                        empresa,                        # empresa
+                        lugar,                          # lugar
+                        tiempo_publicado,               # tiempo publicado
+                        salario,                        # salario
+                        modalidad,                      # modalidad de trabajo
+                        None,                           # subarea
+                        url_oferta,                     # url oferta
+                        url_pagina,                     # url pagina
+                        None,                           # area
+                        datetime.now(),                 # fecha creacion
+                        datetime.now(),                 # fecha modificacion
+                        detalle.text,                   # detalle
+                        fecha_publicacion,              # fecha publicacion
+                        id_anuncioempleo                # id_anuncioempleo
+                    )
 
-                id_oferta_insert = self.__of_service.insert_then_return_latest_row(ofer)
-                self.insertarOfertaDetalle(parrafo, id_oferta_insert)
+                    id_oferta_insert = self.__of_service.insert_then_return_latest_row(ofer)
+                    self.insertarOfertaDetalle(parrafo, id_oferta_insert)
+        except:
+            print("Limite de scroll permitido")
 
     def insertarOfertaDetalle(self, parrafo, id_oferta):
         for linea_descripcion in parrafo:

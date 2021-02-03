@@ -22,4 +22,4 @@ class WebscrapingDao():
             webscraping.getUrl_busqueda(),
             webscraping.getId_keyword())
 
-        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)
+        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last, "tb_webscraping")

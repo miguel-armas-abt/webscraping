@@ -34,7 +34,7 @@ class OfertaDao():
             oferta.getOfertaFechaPublicacion(),
             oferta.getIdAnuncioEmpleo())
 
-        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)
+        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last, "tb_oferta")
 
     def existe_registro(self, id_anuncioempleo):
         # defino las sentencia sql

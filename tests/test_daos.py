@@ -67,6 +67,6 @@ from datetime import datetime
 # )
 # print(oferta_detalle_dao.OfertaDetalleDao().insert_then_return_latest_row(of_detalle))
 
-# print(keyword_search_dao.KeywordSearchDao().select_keyword_search())
+print(keyword_search_dao.KeywordSearchDao().select_keyword_search())
 
-print(oferta_dao.OfertaDao().existe_registro("a104ddc4dbc15936cdf41e125728c451"))
+# print(oferta_dao.OfertaDao().existe_registro("a104ddc4dbc15936cdf41e125728c451"))

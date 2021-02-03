@@ -6,7 +6,7 @@ class Repository():
     def __init__(self):
         self.__conexion = Connection()
 
-    def insert_then_return_latest_row(self, params, sql_insert, sql_select_last):
+    def insert_then_return_latest_row(self, params, sql_insert, sql_select_last, nombre_tabla):
         last_row_id = 0
         try:
 
@@ -19,7 +19,7 @@ class Repository():
 
             # confirmo cambios
             database.commit()
-            print("Sentencia ejecutada")
+            print("Sentencia ejecutada para llenar " + nombre_tabla)
 
             # obtengo el id del ultimo registro insertado
             cursor.execute(sql_select_last)
@@ -27,7 +27,7 @@ class Repository():
 
         except (Exception, psycopg2.DatabaseError) as error:
             # revertir en caso de error
-            print("Error!, rollback")
+            print("Error: " + nombre_tabla)
             print(error)
             database.rollback()
 
@@ -51,13 +51,12 @@ class Repository():
 
         except (Exception, psycopg2.DatabaseError) as error:
             # revertir en caso de error
-            print("Error!, rollback")
             print(error)
             database.rollback()
 
         database.close()
 
-    def select_keyword_search(self, sql_select):
+    def select_keyword_search(self, sql_select, sql_descripcion):
         keywords = []
         try:
 
@@ -70,10 +69,12 @@ class Repository():
             # obtengo keywords
             cursor.execute(sql_select)
             keywords = list(cursor.fetchall())
+            cursor.execute(sql_descripcion)
+            keywords_actual = cursor.fetchone()
+            print("El keywordsearch actual es ========>" + keywords_actual)
 
         except (Exception, psycopg2.DatabaseError) as error:
             # revertir en caso de error
-            print("Error!, rollback")
             print(error)
 
         database.close()

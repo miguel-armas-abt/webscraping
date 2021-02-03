@@ -25,4 +25,4 @@ class OfertaDetalleDao():
             oferta_detalle.getOfertaPerfilId()
             )
 
-        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last)
+        return self.__repository.insert_then_return_latest_row(params, sql_insert, sql_select_last, "tb_oferta_detalle")

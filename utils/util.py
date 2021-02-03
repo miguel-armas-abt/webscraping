@@ -55,18 +55,21 @@ class Utils():
             if (salario.lower() in lineaTexto.lower()):
                 return True
 
+    def obtener_numero_fecha(self, cadena):
+        return int(re.sub("[^0-9]", "", cadena))    #########
+
     def obtener_fec_pub(self, cadena):
+        # Hace una referencia a fecha actual
         fecha_actual = datetime.datetime.now()
         hora_actual = fecha_actual.hour
         dia_actual = fecha_actual.day
         mes_actual = fecha_actual.month
         anio_actual = fecha_actual.year
 
-        numero = self.obtener_numero_fecha(cadena)
+        if ("hora" in cadena) or ("día" in cadena) or ("mes" in cadena):
 
-        if cadena is None:
-            return None
-        else:
+            numero = self.obtener_numero_fecha(cadena)  ######
+
             if "hora" in cadena:
                 if hora_actual >= numero:
                     return datetime.date(anio_actual, mes_actual, dia_actual)
@@ -86,8 +89,7 @@ class Utils():
                     if mes_actual == 1:
                         return datetime.date(anio_actual - 1, 12, 31 - abs(dia_actual - numero))
                     else:
-                        return datetime.date(anio_actual, mes_actual - 1,
-                                             self.__meses[mes_actual - 1][1] - abs(dia_actual - numero))
+                        return datetime.date(anio_actual, mes_actual - 1, self.__meses[mes_actual - 1][1] - abs(dia_actual - numero))
 
             if "mes" in cadena:
                 if mes_actual > numero:
@@ -95,8 +97,5 @@ class Utils():
                 else:
                     return datetime.date(anio_actual - 1, 12 - abs(mes_actual - numero), dia_actual)
 
-    def obtener_numero_fecha(self, cadena):
-        if cadena is None:
-            return None
         else:
-            return int(re.sub("[^0-9]", "", cadena))
+            return None
